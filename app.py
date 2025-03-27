@@ -99,7 +99,7 @@ color_list = [airline_colors[col] for col in fare_trend_quarterly1.columns]
 
 # Crear la figura con Matplotlib
 fig, ax = plt.subplots(figsize=(18, 6))
-fare_trend_quarterly1.plot(marker='o', linewidth=2, ax=ax, color=color_list)
+fare_trend_quarterly11.plot(marker='o', linewidth=2, ax=ax, color=color_list)
 ax.set_title('Evolución trimestral de la tarifa promedio - Top 5 aerolíneas (MEX ↔ MIA)')
 ax.set_ylabel('Tarifa promedio (USD)')
 ax.set_xlabel('Trimestre')
