@@ -20,16 +20,12 @@ df['CY 23 Enplanements'] = pd.to_numeric(df['CY 23 Enplanements'], errors='coerc
 
 # Función para asignar color según enplanements (naranja = más grande)
 def get_color(pax):
-    if pax > 30_000_000:
+    if pax > 20_000_000:
         return 'red'
-    elif pax > 15_000_000:
+    elif pax > 10_000_000:
         return 'orange'
-    elif pax > 5_000_000:
-        return 'green'
-    elif pax > 1_000_000:
-        return 'darkblue'
     else:
-        return 'lightgray'
+        return 'blue'
 
 # Crear mapa base
 m = folium.Map(location=[27.5, -81], zoom_start=6)
