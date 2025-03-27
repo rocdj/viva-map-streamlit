@@ -81,29 +81,25 @@ st.markdown("## 📈 Evolución trimestral de la tarifa promedio (MEX–MIA, Top
 import matplotlib.pyplot as plt
 
 fare_trend_quarterly1 = pd.read_csv('fare_trend_quarterly.csv')
+fare_trend_quarterly1 = fare_trend_quarterly1.pivot(index='Quarter', columns='Airline', values='Fare')
 
 airline_colors = {
     'AA': 'grey',   # American Airlines → gris
     'Y4': 'purple',   # Volaris → morado
     'DL': 'red',   # Delta → rojo
     'UA': 'blue',   # United → azul rey
-    'AM': '#darkblue',    # Aeroméxico → azul marino
+    'AM': '#000080',    # Aeroméxico → azul marino
     '4O': 'black'
 }
 
-# Ordenar columnas según tu diccionario (solo las presentes)
+# Filtrar y ordenar columnas según tu diccionario
 ordered_cols = [col for col in airline_colors if col in fare_trend_quarterly1.columns]
 fare_trend_quarterly1 = fare_trend_quarterly1[ordered_cols]
-
-# Obtener colores en ese orden
 color_list = [airline_colors[col] for col in fare_trend_quarterly1.columns]
-
-# Graficar con colores manuales
-fare_trend_quarterly1.plot(marker='o', linewidth=2, figsize=(18, 6), color=color_list)
 
 # Crear la figura con Matplotlib
 fig, ax = plt.subplots(figsize=(18, 6))
-#fare_trend_quarterly1.plot(marker='o', linewidth=2, ax=ax, color=[airline_colors.get(col, 'gray') for col in fare_trend_quarterly1.columns])
+fare_trend_quarterly1.plot(marker='o', linewidth=2, ax=ax, color=color_list)
 ax.set_title('Evolución trimestral de la tarifa promedio - Top 5 aerolíneas (MEX ↔ MIA)')
 ax.set_ylabel('Tarifa promedio (USD)')
 ax.set_xlabel('Trimestre')
