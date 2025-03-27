@@ -76,36 +76,12 @@ st_data = st_folium(m, width=1000, height=600)
 
 
 st.markdown("## 📈 Evolución trimestral de la tarifa promedio (MEX–MIA, Top 5 aerolíneas)")
+st.image("FareTrends.png", use_column_width=True)
 
-# Procesamiento de la gráfica (usa tus datos ya cargados)
-import matplotlib.pyplot as plt
+st.markdown("## Proyección mensual de pasajeros lowcost MEX-MIA - Modelo LSTM")
+st.image("ProyeccionMensual.png", use_column_width=True)
 
-fare_trend_quarterly1 = pd.read_csv('fare_trend_quarterly.csv')
-fare_trend_quarterly1 = fare_trend_quarterly1.pivot(index='Quarter', columns='Airline', values='Fare')
+st.markdown("## Pasajeros por año - Top 5 aerolineas (MEX-MIA)")
+st.image("PaxAnuales.png", use_column_width=True)
 
-airline_colors = {
-    'AA': 'grey',   # American Airlines → gris
-    'Y4': 'purple',   # Volaris → morado
-    'DL': 'red',   # Delta → rojo
-    'UA': 'blue',   # United → azul rey
-    'AM': '#000080',    # Aeroméxico → azul marino
-    '4O': 'black'
-}
 
-# Filtrar y ordenar columnas según tu diccionario
-ordered_cols = [col for col in airline_colors if col in fare_trend_quarterly1.columns]
-fare_trend_quarterly1 = fare_trend_quarterly1[ordered_cols]
-color_list = [airline_colors[col] for col in fare_trend_quarterly1.columns]
-
-# Crear la figura con Matplotlib
-fig, ax = plt.subplots(figsize=(18, 6))
-fare_trend_quarterly1.plot(marker='o', linewidth=2, ax=ax, color=color_list)
-ax.set_title('Evolución trimestral de la tarifa promedio - Top 5 aerolíneas (MEX ↔ MIA)')
-ax.set_ylabel('Tarifa promedio (USD)')
-ax.set_xlabel('Trimestre')
-ax.grid(True)
-ax.legend(title='Aerolínea', bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.tight_layout()
-
-# Mostrar en Streamlit
-st.pyplot(fig)
