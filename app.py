@@ -2,73 +2,75 @@ import streamlit as st
 import pandas as pd
 import folium
 from streamlit_folium import st_folium
+from folium import Element
 
 st.set_page_config(page_title="Mapa de Aeropuertos en Florida", layout="wide")
 
 st.title("🛫 Capacidad de Aeropuertos en Florida (Enplanements 2023)")
 st.markdown("""
-Este mapa muestra los principales aeropuertos de Florida, representando su volumen de pasajeros mediante el tamaño y color de cada punto.
+Este mapa muestra los principales aeropuertos de Florida.  
+El tamaño y color de cada punto representan el volumen anual de pasajeros (enplanements) durante 2023.
 """)
 
-# Cargar el archivo CSV
+# Cargar archivo CSV
 df = pd.read_csv('aeropuertos_con_enplanements.csv')
 
-# Asegurar que los datos estén correctos
+# Asegurar columnas numéricas
 df['CY 23 Enplanements'] = pd.to_numeric(df['CY 23 Enplanements'], errors='coerce')
 
-# Definir colores por rango de pasajeros
+# Función para asignar color según enplanements (naranja = más grande)
 def get_color(pax):
     if pax > 30_000_000:
-        return 'darkblue'
-    elif pax > 15_000_000:
-        return 'blue'
-    elif pax > 5_000_000:
-        return 'lightblue'
-    elif pax > 1_000_000:
         return 'orange'
+    elif pax > 15_000_000:
+        return 'gold'
+    elif pax > 5_000_000:
+        return 'lightgreen'
+    elif pax > 1_000_000:
+        return 'lightblue'
     else:
         return 'lightgray'
 
-# Crear mapa
+# Crear mapa base
 m = folium.Map(location=[27.5, -81], zoom_start=6)
 
-# Agregar puntos
+# Agregar aeropuertos como puntos
 for _, row in df.iterrows():
     pax = row['CY 23 Enplanements']
-    if pd.isna(pax): continue  # omitir vacíos
+    if pd.isna(pax): continue
 
     folium.CircleMarker(
         location=[row['Lat'], row['Lon']],
-        radius=max(pax / 1_000_000, 2),  # Escala de tamaño
+        radius=max(pax / 1_000_000, 2),
         color=get_color(pax),
         fill=True,
-        fill_opacity=0.7,
+        fill_opacity=0.75,
         popup=f"{row['IATA']}: {int(pax):,} pasajeros"
     ).add_to(m)
 
-# Agregar leyenda HTML
+# Leyenda HTML
 legend_html = """
 <div style="
     position: fixed;
     bottom: 50px;
     left: 50px;
-    width: 230px;
-    background-color: white;
-    border:2px solid gray;
     z-index:9999;
-    font-size:14px;
+    background-color: white;
     padding: 10px;
+    border:2px solid gray;
     border-radius: 5px;
-">
+    font-size: 14px;
+    ">
 <b>Capacidad por aeropuerto</b><br>
-<i style="background:darkblue; width:12px; height:12px; display:inline-block;"></i> Más de 30M<br>
-<i style="background:blue; width:12px; height:12px; display:inline-block;"></i> 15M–30M<br>
-<i style="background:lightblue; width:12px; height:12px; display:inline-block;"></i> 5M–15M<br>
-<i style="background:orange; width:12px; height:12px; display:inline-block;"></i> 1M–5M<br>
-<i style="background:lightgray; width:12px; height:12px; display:inline-block;"></i> Menos de 1M
+<i style="background:orange; width:12px; height:12px; display:inline-block; margin-right:5px;"></i> Más de 30M<br>
+<i style="background:gold; width:12px; height:12px; display:inline-block; margin-right:5px;"></i> 15M–30M<br>
+<i style="background:lightgreen; width:12px; height:12px; display:inline-block; margin-right:5px;"></i> 5M–15M<br>
+<i style="background:lightblue; width:12px; height:12px; display:inline-block; margin-right:5px;"></i> 1M–5M<br>
+<i style="background:lightgray; width:12px; height:12px; display:inline-block; margin-right:5px;"></i> Menos de 1M
 </div>
 """
-m.get_root().html.add_child(folium.Element(legend_html))
+
+m.get_root().html.add_child(Element(legend_html))
 
 # Mostrar mapa en Streamlit
 st_data = st_folium(m, width=1000, height=600)
