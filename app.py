@@ -76,12 +76,12 @@ st_data = st_folium(m, width=1000, height=600)
 
 
 st.markdown("## 📈 Evolución trimestral de la tarifa promedio (MEX–MIA, Top 5 aerolíneas)")
-st.image("FareTrends.png", use_column_width=True)
+st.image("FareTrends.png", use_container_width=True)
 
 st.markdown("## Proyección mensual de pasajeros lowcost MEX-MIA - Modelo LSTM")
-st.image("ProyeccionMensual.png", use_column_width=True)
+st.image("ProyeccionMensual.png", use_container_width=True)
 
 st.markdown("## Pasajeros por año - Top 5 aerolineas (MEX-MIA)")
-st.image("PaxAnuales.png", use_column_width=True)
+st.image("PaxAnuales.png", use_container_width=True)
 
 
