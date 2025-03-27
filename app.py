@@ -91,9 +91,19 @@ airline_colors = {
     '4O': 'black'
 }
 
+# Ordenar columnas según tu diccionario (solo las presentes)
+ordered_cols = [col for col in airline_colors if col in fare_trend_quarterly1.columns]
+fare_trend_quarterly1 = fare_trend_quarterly1[ordered_cols]
+
+# Obtener colores en ese orden
+color_list = [airline_colors[col] for col in fare_trend_quarterly1.columns]
+
+# Graficar con colores manuales
+fare_trend_quarterly1.plot(marker='o', linewidth=2, figsize=(18, 6), color=color_list)
+
 # Crear la figura con Matplotlib
 fig, ax = plt.subplots(figsize=(18, 6))
-fare_trend_quarterly1.plot(marker='o', linewidth=2, ax=ax, color=[airline_colors.get(col, 'gray') for col in fare_trend_quarterly1.columns])
+#fare_trend_quarterly1.plot(marker='o', linewidth=2, ax=ax, color=[airline_colors.get(col, 'gray') for col in fare_trend_quarterly1.columns])
 ax.set_title('Evolución trimestral de la tarifa promedio - Top 5 aerolíneas (MEX ↔ MIA)')
 ax.set_ylabel('Tarifa promedio (USD)')
 ax.set_xlabel('Trimestre')
