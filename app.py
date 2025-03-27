@@ -21,13 +21,13 @@ df['CY 23 Enplanements'] = pd.to_numeric(df['CY 23 Enplanements'], errors='coerc
 # Función para asignar color según enplanements (naranja = más grande)
 def get_color(pax):
     if pax > 30_000_000:
-        return 'orange'
+        return 'red'
     elif pax > 15_000_000:
-        return 'gold'
+        return 'orange'
     elif pax > 5_000_000:
-        return 'lightgreen'
+        return 'green'
     elif pax > 1_000_000:
-        return 'lightblue'
+        return 'darkblue'
     else:
         return 'lightgray'
 
