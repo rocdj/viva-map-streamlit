@@ -83,12 +83,12 @@ import matplotlib.pyplot as plt
 fare_trend_quarterly1 = pd.read_csv('fare_trend_quarterly.csv')
 
 airline_colors = {
-    'AA': '#808080',   # American Airlines → gris
-    'Y4': '#800080',   # Volaris → morado
-    'DL': '#FF0000',   # Delta → rojo
-    'UA': '#0057B7',   # United → azul rey
-    'AM': '#000080',    # Aeroméxico → azul marino
-    '4O': '#000000'
+    'AA': 'grey',   # American Airlines → gris
+    'Y4': 'purple',   # Volaris → morado
+    'DL': 'red',   # Delta → rojo
+    'UA': 'blue',   # United → azul rey
+    'AM': '#darkblue',    # Aeroméxico → azul marino
+    '4O': 'black'
 }
 
 # Crear la figura con Matplotlib
