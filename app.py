@@ -80,6 +80,8 @@ st.markdown("## 📈 Evolución trimestral de la tarifa promedio (MEX–MIA, Top
 # Procesamiento de la gráfica (usa tus datos ya cargados)
 import matplotlib.pyplot as plt
 
+fare_trend_quarterly1 = pd.read_csv('fare_trend_quarterly.csv')
+
 # Crear la figura con Matplotlib
 fig, ax = plt.subplots(figsize=(18, 6))
 fare_trend_quarterly1.plot(marker='o', linewidth=2, ax=ax, color=[airline_colors.get(col, 'gray') for col in fare_trend_quarterly1.columns])
