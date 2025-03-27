@@ -68,5 +68,27 @@ legend_html = """
 
 m.get_root().html.add_child(Element(legend_html))
 
+
+
 # Mostrar mapa en Streamlit
 st_data = st_folium(m, width=1000, height=600)
+
+
+
+st.markdown("## 📈 Evolución trimestral de la tarifa promedio (MEX–MIA, Top 5 aerolíneas)")
+
+# Procesamiento de la gráfica (usa tus datos ya cargados)
+import matplotlib.pyplot as plt
+
+# Crear la figura con Matplotlib
+fig, ax = plt.subplots(figsize=(18, 6))
+fare_trend_quarterly1.plot(marker='o', linewidth=2, ax=ax, color=[airline_colors.get(col, 'gray') for col in fare_trend_quarterly1.columns])
+ax.set_title('Evolución trimestral de la tarifa promedio - Top 5 aerolíneas (MEX ↔ MIA)')
+ax.set_ylabel('Tarifa promedio (USD)')
+ax.set_xlabel('Trimestre')
+ax.grid(True)
+ax.legend(title='Aerolínea', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+
+# Mostrar en Streamlit
+st.pyplot(fig)
